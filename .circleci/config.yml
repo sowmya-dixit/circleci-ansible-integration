@@ -62,6 +62,20 @@ jobs:
         type: string
         default: ''
 
+      inventory:
+        description: |
+          Ansible inventory file. The default value must be empty,
+          so do not store any value to this environment variable.
+          The data must be registered in base64 format
+        type: env_var_name
+        default: NONEXISTENT_ANSIBLE_INVENTORY
+
+      inventory-parameters:
+        description: |
+          Ansible inventory parameters
+        type: string
+        default: ''
+
       playbook:
         description: |
           The path of Ansible playbook
@@ -78,6 +92,8 @@ jobs:
       - ansible/install:
           version: <<parameters.version>>
       - ansible/playbook:
+          inventory: <<parameters.inventory>>
+          inventory-parameters: <<parameters.inventory-parameters>>
           playbook: <<parameters.playbook>>
 
 workflows:
@@ -85,4 +101,6 @@ workflows:
   test-checkout:
     jobs:
       - ansible-playbook:
+          inventory: ANSIBLE_INVENTORY
+          inventory-parameters:
           playbook: "ansible/java_provision.yml"
