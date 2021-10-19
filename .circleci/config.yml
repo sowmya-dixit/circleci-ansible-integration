@@ -47,13 +47,13 @@ orbs:
   ansible: orbss/ansible-playbook@0.0.5
 
 executors:
-  java:
+  python:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: circleci/python
 
 jobs:
   ansible-playbook:
-    executor: java
+    executor: python
 
     parameters:
       version:
