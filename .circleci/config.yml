@@ -4,19 +4,20 @@ version: 2.1
 orbs:
   ansible-playbook: orbss/ansible-playbook@0.0.5
 description: |
-  Execute ansible-playbook command
-parameters:
-  playbook:
-    description: |
-      The path of Ansible playbook
-    type: string
-  playbook-options:
-    default: ''
-    description: |
-      Ansible-playbook command options
-    type: string  
+  Execute ansible-playbook command  
 jobs:
   build-and-deploy:
+    parameters:
+      playbook:
+        default: ''
+        description: |
+          The path of Ansible playbook
+        type: string
+      playbook-options:
+        default: ''
+        description: |
+          Ansible-playbook command options
+        type: string
     docker:
       - image: cimg/openjdk:11.0
     steps:
