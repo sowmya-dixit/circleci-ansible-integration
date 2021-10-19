@@ -28,10 +28,10 @@ jobs:
           name: Test
           command: mvn test
       - run:
-      command: |
-        # Execute ansible-playbook command
-        ansible-playbook <<parameters.playbook>>
-      name: Execute 
+          command: |
+            # Execute ansible-playbook command
+            ansible-playbook <<parameters.playbook>>
+          name: Execute 
 workflows:
   sample:
     jobs:
