@@ -16,8 +16,7 @@ jobs:
       - run:
           name: Test
           command: mvn test
-      - run:
-          name: Run ansible playbook
+      - deploy:
           command: |
             pwd
             ls
