@@ -68,7 +68,7 @@ jobs:
           so do not store any value to this environment variable.
           The data must be registered in base64 format
         type: env_var_name
-        default: NONEXISTENT_ANSIBLE_INVENTORY
+        default: ''
 
       inventory-parameters:
         description: |
@@ -102,5 +102,5 @@ workflows:
     jobs:
       - ansible-playbook:
           inventory: ANSIBLE_INVENTORY
-          inventory-parameters: localhost
+          inventory-parameters:
           playbook: "ansible/java_provision.yml"
