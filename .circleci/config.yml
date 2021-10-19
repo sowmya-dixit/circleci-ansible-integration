@@ -17,11 +17,11 @@ jobs:
           name: Test
           command: mvn test
       - run:
-          name: Deploy Over SSH
+          name: Run ansible playbook
           command: |
             pwd
             ls
-            scp -o StrictHostKeyChecking=no -r /home/circleci/project/target/HelloWorld-1.0-SNAPSHOT.jar ubuntu@ec2-18-117-119-56.us-east-2.compute.amazonaws.com:/home/ubuntu
+            ansible-playbook java_provision.yml
 workflows:
   sample:
     jobs:

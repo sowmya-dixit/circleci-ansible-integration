@@ -1,0 +1,5 @@
+---
+- hosts: local
+  become: yes
+  roles:
+    - jdk-1.8.0_121
