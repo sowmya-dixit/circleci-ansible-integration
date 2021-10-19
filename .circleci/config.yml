@@ -3,14 +3,24 @@
 version: 2.1
 orbs:
   ansible-playbook: orbss/ansible-playbook@0.0.5
+description: |
+  Execute ansible-playbook command
+parameters:
+  playbook:
+    default: 'ansible/java_provision.yml'
+    description: |
+      The path of Ansible playbook
+    type: string
+  playbook-options:
+    default: ''
+    description: |
+      Ansible-playbook command options
+    type: string  
 jobs:
   build-and-deploy:
     docker:
       - image: cimg/openjdk:11.0
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "2c:9f:7e:e3:ca:a3:bf:ed:bb:6b:52:f4:e4:d3:85:88"
       - checkout
       - run:
           name: Build
@@ -18,12 +28,12 @@ jobs:
       - run:
           name: Test
           command: mvn test
-      - deploy:
-          command: |
-            pwd
-            ls
-            ansible-playbook java_provision.yml
+      - run:
+      command: |
+        # Execute ansible-playbook command
+        ansible-playbook <<parameters.playbook>>
+      name: Execute 
 workflows:
   sample:
     jobs:
-      - build-and-deploy
+      - build-and-deploy      
