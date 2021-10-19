@@ -10,22 +10,18 @@
     remote_src: yes
     keep_newer: yes
   register: tar
-  connection: local
 
 - name: Updating java jdk to system path
   shell: |
     update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_121/bin/java 9999
     update-alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_121/bin/java 9999
   when: tar.changed
-  connection: local
 
 - name: Checking java version
   shell: java -version
   register: java
   changed_when: false
-  connection: local
 
 - name: Java version
   debug:
     var: java.stderr
-  connection: local
