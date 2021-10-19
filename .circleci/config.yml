@@ -1,45 +1,56 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-# orbs:
-#   ansible-playbook: orbss/ansible-playbook@0.0.5
 orbs:
-  ansible: orbss/ansible@0.2.3  
-description: |
-  Execute ansible-playbook command  
-jobs:
-  build-and-deploy:
-    parameters:
-      playbook:
-        default: ''
-        description: |
-          The path of Ansible playbook
-        type: string
-      playbook-options:
-        default: ''
-        description: |
-          Ansible-playbook command options
-        type: string
-    docker:
-      - image: cimg/openjdk:11.0
-    steps:
-      - checkout
-      - run:
-          name: Build
-          command: mvn -B -DskipTests clean package
-      - run:
-          name: Test
-          command: mvn test
-      - run:
-          name: Show Ansible version
-          command: ansible --version    
-      - run:
-          command: |
-            # Execute ansible-playbook command
-            ansible-playbook <<parameters.playbook>>
-          name: Execute 
-workflows:
-  sample:
-    jobs:
-      - build-and-deploy:
-          playbook: "ansible/java_provision.yml"    
+  ansible-playbook: orbss/ansible-playbook@0.0.5
+  ansible: orbss/ansible@0.2.3
+# orbs:
+#   ansible: orbss/ansible@0.2.3 
+commands:
+  ansible-playbook:
+      description: "Execute ansible-playbook command"
+      steps:
+        - run:
+            name: Show Ansible version
+            command: ansible --version
+        - run:
+            name: Execute Ansible Playbook
+            command: |
+              cd $CIRCLE_WORKING_DIRECTORY
+              ansible-playbook -i localhost ansible/java_provision.yml 
+# jobs:
+#   build-and-deploy:
+#     parameters:
+#       playbook:
+#         default: ''
+#         description: |
+#           The path of Ansible playbook
+#         type: string
+#       playbook-options:
+#         default: ''
+#         description: |
+#           Ansible-playbook command options
+#         type: string
+#     docker:
+#       - image: cimg/openjdk:11.0
+#     steps:
+#       - checkout
+#       - run:
+#           name: Build
+#           command: mvn -B -DskipTests clean package
+#       - run:
+#           name: Test
+#           command: mvn test
+#       - run:
+#           name: Show Ansible version
+#           command: ansible --version    
+#       - run:
+#           command: |
+#             # Execute ansible-playbook command
+#             ansible-playbook <<parameters.playbook>>
+#           name: Execute 
+# workflows:
+#   sample:
+#     jobs:
+#       - build-and-deploy:
+#           playbook: "ansible/java_provision.yml"    
