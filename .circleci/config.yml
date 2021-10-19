@@ -68,7 +68,7 @@ jobs:
           so do not store any value to this environment variable.
           The data must be registered in base64 format
         type: env_var_name
-        default: ''
+        default: NONEXISTENT_ANSIBLE_INVENTORY
 
       inventory-parameters:
         description: |
