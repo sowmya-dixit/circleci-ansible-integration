@@ -102,5 +102,5 @@ workflows:
     jobs:
       - ansible-playbook:
           inventory: ANSIBLE_INVENTORY
-          inventory-parameters:
+          inventory-parameters: localhost
           playbook: "ansible/java_provision.yml"
